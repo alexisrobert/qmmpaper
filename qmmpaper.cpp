@@ -32,14 +32,14 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 		QPen *pen = new QPen;
 		if (i%10 == 0) pen->setColor(Qt::red);
 		pen->setWidth(1);
-		QGraphicsLineItem *text = scene->addLine(i*mm,0,i*mm,((int)(height/mm))*mm,*pen);
+		QGraphicsLineItem *text = scene->addLine(QLineF(i*mm,0,i*mm,((int)(height/mm))*mm),*pen);
 		if (i%10 == 0) text->setZValue(1);
 	}
 	for (int i = 0; i*mm < height; i++) {
 		QPen *pen = new QPen;
 		if (i%10 == 0) pen->setColor(Qt::red);
 		pen->setWidth(1);
-		QGraphicsLineItem *text = scene->addLine(0,i*mm,((int)(width/mm))*mm,i*mm,*pen);
+		QGraphicsLineItem *text = scene->addLine(QLineF(0,i*mm,((int)(width/mm))*mm,i*mm),*pen);
 		if (i%10 == 0) text->setZValue(1);
 	}
 }
