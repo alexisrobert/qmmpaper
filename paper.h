@@ -37,4 +37,4 @@ private:
   float dpm;
 };
 
-#endif __PAPER_H__
+#endif
