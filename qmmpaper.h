@@ -12,6 +12,7 @@ public:
 	void generate();
 
 private slots:
+	void on_menuExit_triggered();
 	void on_menuPrint_triggered();
 	void on_menuPrintSettings_triggered();
 	void on_color1button_clicked();

@@ -70,6 +70,10 @@ void QMMPaper::generate() {
 	}
 }
 
+void QMMPaper::on_menuExit_triggered() {
+	this->close();
+}
+
 void QMMPaper::on_menuPrint_triggered() {
 	QPainter painter(printer);
 	scene->render(&painter, QRectF(0,0,printer->width(),printer->height()));
