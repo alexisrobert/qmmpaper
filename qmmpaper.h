@@ -20,6 +20,7 @@ private slots:
 	void on_predefined1button_clicked();
 	void on_predefined2button_clicked();
 	void on_predefined3button_clicked();
+	void on_text_returnPressed();
 
 private:
     Ui::MainWindow ui;
@@ -28,6 +29,7 @@ private:
 	QColor color1;
 	QColor color2;
 	QColor color3;
+	QString text;
 };
 
 #endif

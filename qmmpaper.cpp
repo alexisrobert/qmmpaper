@@ -12,6 +12,7 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 	printer = new QPrinter();
 	printer->setPageSize(QPrinter::A4);
 	
+	text = "";
 	on_predefined1button_clicked(); // Little hack :)
 }
 
@@ -42,8 +43,8 @@ void QMMPaper::generate() {
 		} else {
 			pen->setColor(this->color2);
 		}
-		QGraphicsLineItem *text = scene->addLine(QLineF(i*mm,0,i*mm,((int)(height/mm))*mm),*pen);
-		if (i%10 == 0) text->setZValue(1);
+		QGraphicsLineItem *line = scene->addLine(QLineF(i*mm,0,i*mm,((int)(height/mm))*mm),*pen);
+		if (i%10 == 0) line->setZValue(1);
 	}
 	for (int i = 0; i*mm < height; i++) {
 		QPen *pen = new QPen;
@@ -55,8 +56,17 @@ void QMMPaper::generate() {
 		} else {
 			pen->setColor(this->color2);
 		}
-		QGraphicsLineItem *text = scene->addLine(QLineF(0,i*mm,((int)(width/mm))*mm,i*mm),*pen);
-		if (i%10 == 0) text->setZValue(1);
+		QGraphicsLineItem *line = scene->addLine(QLineF(0,i*mm,((int)(width/mm))*mm,i*mm),*pen);
+		if (i%10 == 0) line->setZValue(1);
+	}
+	
+	// Add text
+	if (text != "") {
+		QGraphicsTextItem *textitem = scene->addText(text);
+		textitem->setPos((width/2)-(textitem->boundingRect().width()/2), 
+							(height-(5*mm))-(textitem->boundingRect().height()/2)); // Centers the text
+		textitem->setZValue(2);
+		scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(1);
 	}
 }
 
@@ -104,5 +114,10 @@ void QMMPaper::on_predefined3button_clicked() {
 	color1 = QColor(79,121,255);
 	color2 = QColor(156,198,255);
 	color3 = QColor(144,153,255);
+	QMMPaper::generate();
+}
+
+void QMMPaper::on_text_returnPressed() {
+	text = ui.text->text();
 	QMMPaper::generate();
 }
