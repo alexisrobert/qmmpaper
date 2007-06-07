@@ -23,8 +23,10 @@ void QMMPaper::generate() {
 	printf("Canvas size (paper without margin): %d x %d\n",printer->pageRect().height(),printer->pageRect().width());
 	
 	// Empty the QGraphicsScene
-	foreach(QGraphicsItem *item,scene->items())
+	foreach(QGraphicsItem *item,scene->items()) {
 		scene->removeItem(item);
+		delete item;
+	}
 	
 	float mm = (printer->resolution())/25.4;
 	ui.graphicsView->setScene(scene);
