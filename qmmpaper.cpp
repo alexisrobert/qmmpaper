@@ -34,15 +34,23 @@ void QMMPaper::generate() {
 	
 	for (int i = 0; i*mm < width; i++) {
 		QPen *pen = new QPen;
-		if (i%10 == 0) pen->setColor(Qt::red);
-		pen->setWidth(0);
+		if (i%10 == 0) {
+			pen->setColor(Qt::red);
+			pen->setWidth(1);
+		} else {
+			pen->setWidth(0);
+		}
 		QGraphicsLineItem *text = scene->addLine(QLineF(i*mm,0,i*mm,((int)(height/mm))*mm),*pen);
 		if (i%10 == 0) text->setZValue(1);
 	}
 	for (int i = 0; i*mm < height; i++) {
 		QPen *pen = new QPen;
-		if (i%10 == 0) pen->setColor(Qt::red);
-		pen->setWidth(0);
+		if (i%10 == 0) {
+			pen->setColor(Qt::red);
+			pen->setWidth(1);
+		} else {
+			pen->setWidth(0);
+		}
 		QGraphicsLineItem *text = scene->addLine(QLineF(0,i*mm,((int)(width/mm))*mm,i*mm),*pen);
 		if (i%10 == 0) text->setZValue(1);
 	}
