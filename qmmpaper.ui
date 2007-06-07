@@ -26,8 +26,8 @@
         </property>
         <property name="sizeHint" >
          <size>
-          <width>20</width>
-          <height>131</height>
+          <width>145</width>
+          <height>151</height>
          </size>
         </property>
        </spacer>
@@ -79,6 +79,13 @@
           <widget class="QPushButton" name="color2button" >
            <property name="text" >
             <string>Color 2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="color3button" >
+           <property name="text" >
+            <string>Color 3</string>
            </property>
           </widget>
          </item>

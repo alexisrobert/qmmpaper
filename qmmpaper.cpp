@@ -37,6 +37,8 @@ void QMMPaper::generate() {
 		
 		if (i%10 == 0) {
 			pen->setColor(this->color1);
+		} else if (i%5 == 0) {
+			pen->setColor(this->color3);
 		} else {
 			pen->setColor(this->color2);
 		}
@@ -48,6 +50,8 @@ void QMMPaper::generate() {
 		pen->setWidth(0);
 		if (i%10 == 0) {
 			pen->setColor(this->color1);
+		} else if (i%5 == 0) {
+			pen->setColor(this->color3);
 		} else {
 			pen->setColor(this->color2);
 		}
@@ -70,33 +74,35 @@ void QMMPaper::on_menuPrintSettings_triggered() {
 
 void QMMPaper::on_color1button_clicked() {
 	color1 = QColorDialog::getColor(color1);
-	int r,v,b;
-	color1.getRgb(&r,&v,&b);
-	printf("R:%d V:%d B:%d\n",r,v,b);
 	QMMPaper::generate();
 }
 
 void QMMPaper::on_color2button_clicked() {
 	color2 = QColorDialog::getColor(color2);
-	int r,v,b;
-	color2.getRgb(&r,&v,&b);
-	printf("R:%d V:%d B:%d\n",r,v,b);
+	QMMPaper::generate();
+}
+
+void QMMPaper::on_color3button_clicked() {
+	color3 = QColorDialog::getColor(color3);
 	QMMPaper::generate();
 }
 
 void QMMPaper::on_predefined1button_clicked() {
 	color1 = QColor(127,127,127);
 	color2 = QColor(208,208,208);
+	color3 = QColor(173,173,173);
 	QMMPaper::generate();
 }
 void QMMPaper::on_predefined2button_clicked() {
-	color1 = QColor(255,136,0);
+	color1 = QColor(255,144,0);
 	color2 = QColor(255,207,77);
+	color3 = QColor(255,184,29);
 	QMMPaper::generate();
 }
 
 void QMMPaper::on_predefined3button_clicked() {
 	color1 = QColor(79,121,255);
 	color2 = QColor(156,198,255);
+	color3 = QColor(144,153,255);
 	QMMPaper::generate();
 }
