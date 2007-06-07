@@ -32,6 +32,7 @@ private:
 	QColor color2;
 	QColor color3;
 	QString text;
+	void drawLine(int lineno, float mm, int height, int width, bool horizontal = TRUE);
 };
 
 #endif

@@ -13,9 +13,32 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 	printer->setPageSize(QPrinter::A4);
 	
 	scene = new QGraphicsScene(this);
+	ui.graphicsView->setScene(scene);
 	
 	text = "";
 	on_predefined1button_clicked(); // Little hack :)
+}
+
+void QMMPaper::drawLine(int lineno, float mm, int height, int width, bool horizontal) { // TODO : Use private variables
+	QPen *pen = new QPen;
+	pen->setWidth(0);
+	
+	if (lineno%10 == 0) {
+		pen->setColor(this->color1);
+	} else if (lineno%5 == 0) {
+		pen->setColor(this->color3);
+	} else {
+		pen->setColor(this->color2);
+	}
+	
+	QGraphicsLineItem *line;
+	
+	if (horizontal == TRUE)
+		line = scene->addLine(QLineF(lineno*mm,0,lineno*mm,((int)(height/mm))*mm),*pen);
+	else
+		line = scene->addLine(QLineF(0,lineno*mm,((int)(width/mm))*mm,lineno*mm),*pen);
+	
+	if (lineno%10 == 0) line->setZValue(1);
 }
 
 void QMMPaper::generate() {
@@ -28,40 +51,16 @@ void QMMPaper::generate() {
 		delete item;
 	}
 	
-	float mm = (printer->resolution())/25.4;
-	ui.graphicsView->setScene(scene);
+	float mm = (printer->resolution())/25.4; // Computes how many pixels = 1mm
 	
+	// Defines width and height
 	int width, height;
 	for (width = printer->pageRect().width(); (int)(width/mm) % 10 != 0; width--){}
 	for (height = printer->pageRect().height(); (int)(height/mm) % 10 != 0; height--){}
 	
-	for (int i = 0; i*mm < width; i++) {
-		QPen *pen = new QPen;
-		pen->setWidth(0);
-		
-		if (i%10 == 0) {
-			pen->setColor(this->color1);
-		} else if (i%5 == 0) {
-			pen->setColor(this->color3);
-		} else {
-			pen->setColor(this->color2);
-		}
-		QGraphicsLineItem *line = scene->addLine(QLineF(i*mm,0,i*mm,((int)(height/mm))*mm),*pen);
-		if (i%10 == 0) line->setZValue(1);
-	}
-	for (int i = 0; i*mm < height; i++) {
-		QPen *pen = new QPen;
-		pen->setWidth(0);
-		if (i%10 == 0) {
-			pen->setColor(this->color1);
-		} else if (i%5 == 0) {
-			pen->setColor(this->color3);
-		} else {
-			pen->setColor(this->color2);
-		}
-		QGraphicsLineItem *line = scene->addLine(QLineF(0,i*mm,((int)(width/mm))*mm,i*mm),*pen);
-		if (i%10 == 0) line->setZValue(1);
-	}
+	// Add lines
+	for (int i = 0; i*mm < width; i++) drawLine(i,mm,height,width,TRUE);
+	for (int i = 0; i*mm < height; i++) drawLine(i,mm,height,width,FALSE);
 	
 	// Add text
 	if (!text.isEmpty()) {
