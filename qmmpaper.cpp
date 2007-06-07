@@ -37,7 +37,6 @@ void QMMPaper::generate() {
 		
 		if (i%10 == 0) {
 			pen->setColor(this->color1);
-			pen->setWidth(1);
 		} else {
 			pen->setColor(this->color2);
 		}
