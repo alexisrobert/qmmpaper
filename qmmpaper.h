@@ -14,11 +14,15 @@ public:
 private slots:
 	void on_menuPrint_triggered();
 	void on_menuPrintSettings_triggered();
+	void on_color1button_clicked();
+	void on_color2button_clicked();
 
 private:
     Ui::MainWindow ui;
 	QGraphicsScene *scene;
 	QPrinter *printer;
+	QColor color1;
+	QColor color2;
 };
 
 #endif

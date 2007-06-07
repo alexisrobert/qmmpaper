@@ -13,9 +13,27 @@
    <string>QMmPaper</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
-   <layout class="QVBoxLayout" >
+   <layout class="QHBoxLayout" >
     <item>
      <widget class="QGraphicsView" name="graphicsView" />
+    </item>
+    <item>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QPushButton" name="color1button" >
+        <property name="text" >
+         <string>&amp;Color 1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="color2button" >
+        <property name="text" >
+         <string>Color 2</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
