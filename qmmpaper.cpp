@@ -61,9 +61,6 @@ void QMMPaper::drawLine(int lineno, float mm, int height, int width, bool horizo
 }
 
 void QMMPaper::generate() {
-  printf("Printer resolution : %d DPI\n",printer->resolution());
-  printf("Canvas size (paper without margin): %d x %d\n",printer->pageRect().height(),printer->pageRect().width());
-  
   // Empty the QGraphicsScene
   foreach(QGraphicsItem *item,scene->items()) {
     scene->removeItem(item);
