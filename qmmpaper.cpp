@@ -20,6 +20,7 @@
 #include <QtGui>
 
 #include "qmmpaper.h"
+#include "colors.h"
 
 #include <QColorDialog>
 #include <QPrintDialog>
@@ -37,12 +38,20 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   paper = NULL;
   
   text = "";
-  on_predefined1button_clicked(); // Little hack :)
+
+  setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
 }
 
 QMMPaper::~QMMPaper() {
   if (paper != NULL)
     delete paper;
+}
+
+void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
+  this->color1 = color1;
+  this->color2 = color2;
+  this->color3 = color3;
+  generate();
 }
 
 void QMMPaper::drawLine(int lineno, bool horizontal) {
@@ -133,23 +142,15 @@ void QMMPaper::on_color3button_clicked() {
 }
 
 void QMMPaper::on_predefined1button_clicked() {
-  color1 = QColor(127,127,127);
-  color2 = QColor(208,208,208);
-  color3 = QColor(173,173,173);
-  QMMPaper::generate();
+  setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
 }
+
 void QMMPaper::on_predefined2button_clicked() {
-  color1 = QColor(255,144,0);
-  color2 = QColor(255,207,77);
-  color3 = QColor(255,184,29);
-  QMMPaper::generate();
+  setColor(ORANGE_COLOR1, ORANGE_COLOR2, ORANGE_COLOR3);
 }
 
 void QMMPaper::on_predefined3button_clicked() {
-  color1 = QColor(79,121,255);
-  color2 = QColor(156,198,255);
-  color3 = QColor(144,153,255);
-  QMMPaper::generate();
+  setColor(BLUE_COLOR1, BLUE_COLOR2, BLUE_COLOR3);
 }
 
 void QMMPaper::on_text_returnPressed() {

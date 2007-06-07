@@ -30,7 +30,6 @@ class QMMPaper : public QMainWindow
 public:
   QMMPaper(QMainWindow *parent = 0);
   ~QMMPaper();
-  void generate();
 		 
 private slots:
   void on_menuExit_triggered();
@@ -46,6 +45,10 @@ private slots:
   void on_about_triggered();
   
 private:
+  void setColor(QColor color1, QColor color2, QColor color3);
+  void drawLine(int lineno, bool horizontal = TRUE);
+  void generate();
+
   Ui::MainWindow ui;
   QGraphicsScene *scene;
   QPrinter *printer;
@@ -53,7 +56,6 @@ private:
   QColor color2;
   QColor color3;
   QString text;
-  void drawLine(int lineno, bool horizontal = TRUE);
   Paper* paper;
 };
 
