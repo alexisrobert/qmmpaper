@@ -29,31 +29,26 @@ Paper::Paper(int dpi, int height, int width) {
 }
 
 void Paper::computeDpm() {
-  this->dpm = this->dpi/25.4; // 1 mm => 25.4 inch
+  dpm = dpi/25.4; // 1 mm => 25.4 inch
 }
 
 void Paper::computeSize() {
-  int fwidth, fheight;
-
-  for (fwidth = this->width; (int)((this->width)/(this->dpm)) % 10 != 0; width--){}
-  for (fheight = this->height; (int)((this->height)/(this->dpm)) % 10 != 0; height--){}
-
-  this->height = fheight;
-  this->width = fwidth;
+  for (;(int)(width/dpm) % 10 != 0; width--){}
+  for (;(int)(height/dpm) % 10 != 0; height--){}
 }
 
 int Paper::getHeight() {
-  return this->height;
+  return height;
 }
 
 int Paper::getWidth() {
-  return this->width;
+  return width;
 }
 
 int Paper::getDpi() {
-  return this->dpi;
+  return dpi;
 }
 
 float Paper::getDpm() {
-  return this->dpm;
+  return dpm;
 }
