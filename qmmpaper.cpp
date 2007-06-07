@@ -12,18 +12,19 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 	printer = new QPrinter();
 	printer->setPageSize(QPrinter::A4);
 	
+	scene = new QGraphicsScene(this);
+	
 	text = "";
 	on_predefined1button_clicked(); // Little hack :)
 }
 
 void QMMPaper::generate() {
-	scene = new QGraphicsScene(this);
-	
-	// Now we have printer's resolution in inches
-	// 25.4mm => 1 inch
-	// 1mm => 1/25.4 inch
 	printf("Printer resolution : %d DPI\n",printer->resolution());
 	printf("Canvas size (paper without margin): %d x %d\n",printer->pageRect().height(),printer->pageRect().width());
+	
+	// Empty the QGraphicsScene
+	foreach(QGraphicsItem *item,scene->items())
+		scene->removeItem(item);
 	
 	float mm = (printer->resolution())/25.4;
 	ui.graphicsView->setScene(scene);
