@@ -1,3 +1,22 @@
+/*
+ * QMMPaper, a Qt4 millimetered paper generator
+ * Copyright (c) 2007 Alexis ROBERT <alexis.robert@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <QtGui>
 
 #include "qmmpaper.h"
@@ -20,23 +39,23 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 }
 
 void QMMPaper::drawLine(int lineno, float mm, int height, int width, bool horizontal) { // TODO : Use private variables
-  QPen *pen = new QPen;
-  pen->setWidth(0);
+  QPen pen;
+  pen.setWidth(0);
   
   if (lineno%10 == 0) {
-    pen->setColor(this->color1);
+    pen.setColor(this->color1);
   } else if (lineno%5 == 0) {
-    pen->setColor(this->color3);
+    pen.setColor(this->color3);
   } else {
-    pen->setColor(this->color2);
+    pen.setColor(this->color2);
   }
   
   QGraphicsLineItem *line;
 	
   if (horizontal == TRUE)
-    line = scene->addLine(QLineF(lineno*mm,0,lineno*mm,((int)(height/mm))*mm),*pen);
+    line = scene->addLine(QLineF(lineno*mm,0,lineno*mm,((int)(height/mm))*mm),pen);
   else
-    line = scene->addLine(QLineF(0,lineno*mm,((int)(width/mm))*mm,lineno*mm),*pen);
+    line = scene->addLine(QLineF(0,lineno*mm,((int)(width/mm))*mm,lineno*mm),pen);
   
   if (lineno%10 == 0) line->setZValue(1);
 }
