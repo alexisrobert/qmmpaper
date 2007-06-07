@@ -65,8 +65,8 @@ void QMMPaper::generate() {
 		QGraphicsTextItem *textitem = scene->addText(text);
 		textitem->setPos((width/2)-(textitem->boundingRect().width()/2), 
 							(height-(5*mm))-(textitem->boundingRect().height()/2)); // Centers the text
-		textitem->setZValue(2);
-		scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(1);
+		textitem->setZValue(3);
+		scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(2);
 	}
 }
 
