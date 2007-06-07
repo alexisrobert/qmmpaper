@@ -21,6 +21,7 @@ private slots:
 	void on_predefined2button_clicked();
 	void on_predefined3button_clicked();
 	void on_text_returnPressed();
+	void on_about_triggered();
 
 private:
     Ui::MainWindow ui;

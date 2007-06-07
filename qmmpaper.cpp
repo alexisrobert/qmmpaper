@@ -121,3 +121,7 @@ void QMMPaper::on_text_returnPressed() {
 	text = ui.text->text();
 	QMMPaper::generate();
 }
+
+void QMMPaper::on_about_triggered() {
+	QMessageBox::about(this, "QMmPaper", "Copyright (c) 2007 Alexis ROBERT");
+}
