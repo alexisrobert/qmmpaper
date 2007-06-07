@@ -4,8 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QMMPaper form;
-    form.show();
-    return app.exec();
+  QApplication app(argc, argv);
+  QMMPaper form;
+  form.show();
+  return app.exec();
 }
