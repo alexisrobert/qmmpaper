@@ -7,4 +7,4 @@ CONFIG += release
 # Input
 HEADERS += qmmpaper.h
 FORMS += qmmpaper.ui
-SOURCES += main.cpp qmmpaper.cpp
+SOURCES += main.cpp qmmpaper.cpp paper.cpp

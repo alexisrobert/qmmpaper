@@ -17,44 +17,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef __QMMPAPER_H__
-#define __QMMPAPER_H__
-
-#include "ui_qmmpaper.h"
 #include "paper.h"
 
-class QMMPaper : public QMainWindow
-{
-  Q_OBJECT
-  
-public:
-  QMMPaper(QMainWindow *parent = 0);
-  ~QMMPaper();
-  void generate();
-		 
-private slots:
-  void on_menuExit_triggered();
-  void on_menuPrint_triggered();
-  void on_menuPrintSettings_triggered();
-  void on_color1button_clicked();
-  void on_color2button_clicked();
-  void on_color3button_clicked();
-  void on_predefined1button_clicked();
-  void on_predefined2button_clicked();
-  void on_predefined3button_clicked();
-  void on_text_returnPressed();
-  void on_about_triggered();
-  
-private:
-  Ui::MainWindow ui;
-  QGraphicsScene *scene;
-  QPrinter *printer;
-  QColor color1;
-  QColor color2;
-  QColor color3;
-  QString text;
-  void drawLine(int lineno, bool horizontal = TRUE);
-  Paper* paper;
-};
+Paper::Paper(int dpi, int height, int width) {
+  this->dpi = dpi;
+  this->height = height;
+  this->width = width;
 
-#endif
+  this->computeDpm();
+  this->computeSize();
+}
+
+void Paper::computeDpm() {
+  this->dpm = this->dpi/25.4; // 1 mm => 25.4 inch
+}
+
+void Paper::computeSize() {
+  int fwidth, fheight;
+
+  for (fwidth = this->width; (int)((this->width)/(this->dpm)) % 10 != 0; width--){}
+  for (fheight = this->height; (int)((this->height)/(this->dpm)) % 10 != 0; height--){}
+
+  this->height = fheight;
+  this->width = fwidth;
+}
+
+int Paper::getHeight() {
+  return this->height;
+}
+
+int Paper::getWidth() {
+  return this->width;
+}
+
+int Paper::getDpi() {
+  return this->dpi;
+}
+
+float Paper::getDpm() {
+  return this->dpm;
+}

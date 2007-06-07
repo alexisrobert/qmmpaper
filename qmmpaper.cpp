@@ -33,12 +33,19 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   
   scene = new QGraphicsScene(this);
   ui.graphicsView->setScene(scene);
+
+  paper = NULL;
   
   text = "";
   on_predefined1button_clicked(); // Little hack :)
 }
 
-void QMMPaper::drawLine(int lineno, float mm, int height, int width, bool horizontal) { // TODO : Use private variables
+QMMPaper::~QMMPaper() {
+  if (paper != NULL)
+    delete paper;
+}
+
+void QMMPaper::drawLine(int lineno, bool horizontal) {
   QPen pen;
   pen.setWidth(0);
   
@@ -49,6 +56,10 @@ void QMMPaper::drawLine(int lineno, float mm, int height, int width, bool horizo
   } else {
     pen.setColor(this->color2);
   }
+
+  float mm = paper->getDpm();
+  int width = paper->getWidth();
+  int height = paper->getHeight();
   
   QGraphicsLineItem *line;
 	
@@ -66,17 +77,19 @@ void QMMPaper::generate() {
     scene->removeItem(item);
     delete item;
   }
+
+  // Delete old Paper before recreate it
+  if (paper != NULL)
+    delete paper;
+  paper = new Paper(printer->resolution(), printer->pageRect().height(), printer->pageRect().width());
   
-  float mm = (printer->resolution())/25.4; // Computes how many pixels = 1mm
-	
-  // Defines width and height
-  int width, height;
-  for (width = printer->pageRect().width(); (int)(width/mm) % 10 != 0; width--){}
-  for (height = printer->pageRect().height(); (int)(height/mm) % 10 != 0; height--){}
+  float mm = paper->getDpm();
+  int width = paper->getWidth();
+  int height = paper->getHeight();
   
   // Add lines
-  for (int i = 0; i*mm < width; i++) drawLine(i,mm,height,width,TRUE);
-  for (int i = 0; i*mm < height; i++) drawLine(i,mm,height,width,FALSE);
+  for (int i = 0; i*mm < width; i++) drawLine(i,TRUE);
+  for (int i = 0; i*mm < height; i++) drawLine(i,FALSE);
   
   // Add text
   if (!text.isEmpty()) {
