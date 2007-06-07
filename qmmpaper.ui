@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>441</height>
+    <width>622</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -20,17 +20,69 @@
     <item>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QPushButton" name="color1button" >
-        <property name="text" >
-         <string>&amp;Color 1</string>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Vertical</enum>
         </property>
+        <property name="sizeHint" >
+         <size>
+          <width>20</width>
+          <height>131</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2" >
+        <property name="title" >
+         <string>Predefined colors</string>
+        </property>
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="QPushButton" name="predefined1button" >
+           <property name="text" >
+            <string>Black &amp;&amp; White</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="predefined2button" >
+           <property name="text" >
+            <string>Orange</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="predefined3button" >
+           <property name="text" >
+            <string>Blue</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="color2button" >
-        <property name="text" >
-         <string>Color 2</string>
+       <widget class="QGroupBox" name="groupBox" >
+        <property name="title" >
+         <string>Custom colors</string>
         </property>
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="QPushButton" name="color1button" >
+           <property name="text" >
+            <string>&amp;Color 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="color2button" >
+           <property name="text" >
+            <string>Color 2</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -42,7 +94,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>499</width>
+     <width>622</width>
      <height>22</height>
     </rect>
    </property>

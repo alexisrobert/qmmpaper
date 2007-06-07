@@ -16,6 +16,9 @@ private slots:
 	void on_menuPrintSettings_triggered();
 	void on_color1button_clicked();
 	void on_color2button_clicked();
+	void on_predefined1button_clicked();
+	void on_predefined2button_clicked();
+	void on_predefined3button_clicked();
 
 private:
     Ui::MainWindow ui;
