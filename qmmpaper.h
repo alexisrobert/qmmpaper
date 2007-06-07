@@ -9,6 +9,7 @@ class QMMPaper : public QMainWindow
 
 public:
     QMMPaper(QMainWindow *parent = 0);
+	void generate();
 
 private slots:
 	void on_menuPrint_triggered();
