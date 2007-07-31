@@ -4,7 +4,9 @@ TARGET =
 CONFIG += qt x86
 CONFIG += release
 
+QT += script
+
 # Input
-HEADERS += qmmpaper.h
+HEADERS += jswrapper.h paper.h qmmpaper.h
 FORMS += qmmpaper.ui
-SOURCES += main.cpp qmmpaper.cpp paper.cpp
+SOURCES += main.cpp jswrapper.cpp qmmpaper.cpp paper.cpp

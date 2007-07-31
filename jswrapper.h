@@ -17,18 +17,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <QApplication>
+#ifndef __JSWRAPPER_H__
+#define __JSWRAPPER_H__
 
-#include "qmmpaper.h"
+#include <QObject>
+#include <QGraphicsScene>
 
-int main(int argc, char *argv[])
-{
-  QApplication app(argc, argv);
-  QApplication::setOrganizationName("Alexis ROBERT");
-  QApplication::setOrganizationDomain("qmmpaper.googlecode.com");
-  QApplication::setApplicationName("QMMPaper");
+class JSWrapper : public QObject {
+  Q_OBJECT
 
-  QMMPaper form;
-  form.show();
-  return app.exec();
-}
+  public:
+    JSWrapper(QGraphicsScene *scene);
+    void setColor(QColor color1, QColor color2, QColor color3);
+
+  public slots:
+    void addLine(int x1, int y1, int x2, int y2, int color = 0, int z = 0);
+
+  private:
+    QGraphicsScene *scene;
+    QColor color1;
+    QColor color2;
+    QColor color3;
+};
+
+#endif

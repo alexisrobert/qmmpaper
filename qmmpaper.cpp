@@ -30,14 +30,16 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 {
   ui.setupUi(this);
   printer = new QPrinter();
-  printer->setPageSize(QPrinter::A4);
   
   scene = new QGraphicsScene(this);
   ui.graphicsView->setScene(scene);
 
   paper = NULL;
-  
+  jswrapper = NULL;
+  jsengine = NULL;
   text = "";
+
+  loadScript(settings.value("default/script", "millimetered.js").toString());
 
   setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
 }
@@ -45,39 +47,43 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 QMMPaper::~QMMPaper() {
   if (paper != NULL)
     delete paper;
+
+  if (jswrapper != NULL)
+    delete jswrapper;
+
+  if (jsengine != NULL)
+    delete jsengine;
 }
 
 void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
   this->color1 = color1;
   this->color2 = color2;
   this->color3 = color3;
+
+  if (jswrapper != NULL)
+    jswrapper->setColor(color1, color2, color3);
+
   generate();
 }
 
-void QMMPaper::drawLine(int lineno, bool horizontal) {
-  QPen pen;
-  pen.setWidth(0);
+void QMMPaper::loadScript(QString filename) {
+  // Open script file
+  QFile file(filename);
+  file.open(QIODevice::ReadOnly | QIODevice::Text);
   
-  if (lineno%10 == 0) {
-    pen.setColor(this->color1);
-  } else if (lineno%5 == 0) {
-    pen.setColor(this->color3);
-  } else {
-    pen.setColor(this->color2);
-  }
+  // Evaluate it
+  if (jsengine != NULL)
+    delete jsengine;
 
-  float mm = paper->getDpm();
-  int width = paper->getWidth();
-  int height = paper->getHeight();
-  
-  QGraphicsLineItem *line;
-	
-  if (horizontal == TRUE)
-    line = scene->addLine(QLineF(lineno*mm,0,lineno*mm,((int)(height/mm))*mm),pen);
-  else
-    line = scene->addLine(QLineF(0,lineno*mm,((int)(width/mm))*mm,lineno*mm),pen);
-  
-  if (lineno%10 == 0) line->setZValue(1);
+  jsengine = new QScriptEngine();
+  jsengine->evaluate(file.readAll());
+  file.close();
+
+  // Inject wrapper object inside script engine
+  if (jswrapper == NULL)
+    jswrapper = new JSWrapper(scene);
+
+  jsengine->globalObject().setProperty("wrapper", jsengine->newQObject(jswrapper));
 }
 
 void QMMPaper::generate() {
@@ -95,18 +101,39 @@ void QMMPaper::generate() {
   float mm = paper->getDpm();
   int width = paper->getWidth();
   int height = paper->getHeight();
-  
-  // Add lines
-  for (int i = 0; i*mm < width; i++) drawLine(i,TRUE);
-  for (int i = 0; i*mm < height; i++) drawLine(i,FALSE);
-  
+
+  jsengine->globalObject().setProperty("paper", jsengine->newQObject(paper));
+
+  // Tell script file to draw the paper
+  QScriptValue result = jsengine->evaluate("draw();");
+
+  if (jsengine->hasUncaughtException()) {
+    int line = jsengine->uncaughtExceptionLineNumber();
+    qDebug() << "uncaught exception at line" << line << ":" << result.toString();
+  }
+
   // Add text
   if (!text.isEmpty()) {
     QGraphicsTextItem *textitem = scene->addText(text);
     textitem->setPos((width/2)-(textitem->boundingRect().width()/2), 
 		     (height-(5*mm))-(textitem->boundingRect().height()/2)); // Centers the text
-    textitem->setZValue(3);
-    scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(2);
+    textitem->setZValue(5);
+    scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(4);
+  }
+
+  // Little hack to show the page like it will be printed
+  scene->addLine(0,0,1,0,QPen(Qt::white));
+  scene->addLine(0,height,1,height,QPen(Qt::white));
+}
+
+void QMMPaper::on_menuLoadScript_triggered() {
+  QString filename = QFileDialog::getOpenFileName(this, "Open script", "", "Scripts (*.js)");
+
+  if (filename != NULL) {
+    loadScript(filename);
+    generate();
+
+    settings.setValue("default/script", filename);
   }
 }
 
@@ -127,18 +154,15 @@ void QMMPaper::on_menuPrintSettings_triggered() {
 }
 
 void QMMPaper::on_color1button_clicked() {
-  color1 = QColorDialog::getColor(color1);
-  QMMPaper::generate();
+  setColor(QColorDialog::getColor(color1), color2, color3);
 }
 
 void QMMPaper::on_color2button_clicked() {
-  color2 = QColorDialog::getColor(color2);
-  QMMPaper::generate();
+  setColor(color1, QColorDialog::getColor(color2), color3);
 }
 
 void QMMPaper::on_color3button_clicked() {
-  color3 = QColorDialog::getColor(color3);
-  QMMPaper::generate();
+  setColor(color1, color2, QColorDialog::getColor(color3));
 }
 
 void QMMPaper::on_predefined1button_clicked() {
@@ -159,5 +183,5 @@ void QMMPaper::on_text_returnPressed() {
 }
 
 void QMMPaper::on_about_triggered() {
-  QMessageBox::about(this, "QMmPaper", "Copyright (c) 2007 Alexis ROBERT");
+  QMessageBox::about(this, "QMMPaper", "Copyright (c) 2007 Alexis ROBERT");
 }

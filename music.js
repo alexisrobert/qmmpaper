@@ -1,0 +1,22 @@
+print("Music paper script");
+print("Copyright (c) 2007 Alexis ROBERT");
+print("Bundled with QMMPaper v0.2, under GPL2");
+
+function draw() {
+	mm = paper.getDpm();
+	width = paper.getWidth();
+	height = paper.getHeight();
+
+	top_margin = 20;
+	between_margin = 2;
+	score_margin = 50;
+
+	y = top_margin;
+	while (y+(5*between_margin*mm)+score_margin < height) {
+		for (i = 0; i < 5; i++) {
+			wrapper.addLine(0,y,width,y);
+			y = y+(between_margin*mm);
+		}
+		y = y+score_margin;
+	}
+}

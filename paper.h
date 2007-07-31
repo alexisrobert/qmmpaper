@@ -20,9 +20,15 @@
 #ifndef __PAPER_H__
 #define __PAPER_H__
 
-class Paper {
+#include <QObject>
+
+class Paper : public QObject {
+  Q_OBJECT
+
 public:
   Paper(int dpi, int height, int width);
+
+public slots:
   int getHeight();
   int getWidth();
 

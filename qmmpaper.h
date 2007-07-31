@@ -22,6 +22,9 @@
 
 #include "ui_qmmpaper.h"
 #include "paper.h"
+#include <QScriptEngine>
+#include <QSettings>
+#include "jswrapper.h"
 
 class QMMPaper : public QMainWindow
 {
@@ -30,8 +33,11 @@ class QMMPaper : public QMainWindow
 public:
   QMMPaper(QMainWindow *parent = 0);
   ~QMMPaper();
+
+  void loadScript(QString filename);
 		 
 private slots:
+  void on_menuLoadScript_triggered();
   void on_menuExit_triggered();
   void on_menuPrint_triggered();
   void on_menuPrintSettings_triggered();
@@ -46,7 +52,6 @@ private slots:
   
 private:
   void setColor(QColor color1, QColor color2, QColor color3);
-  void drawLine(int lineno, bool horizontal = TRUE);
   void generate();
 
   Ui::MainWindow ui;
@@ -57,6 +62,11 @@ private:
   QColor color3;
   QString text;
   Paper* paper;
+
+  QSettings settings;
+  
+  QScriptEngine *jsengine;
+  JSWrapper *jswrapper;
 };
 
 #endif
