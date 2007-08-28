@@ -7,11 +7,10 @@ function draw() {
 	width = paper.getWidth();
 	height = paper.getHeight();
 
-	top_margin = 20;
 	between_margin = 2;
 	score_margin = 50;
 
-	y = top_margin;
+	y = score_margin;
 	while (y+(5*between_margin*mm)+score_margin < height) {
 		for (i = 0; i < 5; i++) {
 			wrapper.addLine(0,y,width,y);
