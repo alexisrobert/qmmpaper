@@ -35,7 +35,7 @@ public:
   ~QMMPaper();
 
   void loadScript(QString filename);
-		 
+
 private slots:
   void on_menuLoadScript_triggered();
   void on_menuExit_triggered();
@@ -49,7 +49,7 @@ private slots:
   void on_predefined3button_clicked();
   void on_text_returnPressed();
   void on_about_triggered();
-  
+
 private:
   void setColor(QColor color1, QColor color2, QColor color3);
   void generate();

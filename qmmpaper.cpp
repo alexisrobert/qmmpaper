@@ -39,7 +39,8 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   jsengine = NULL;
   text = "";
 
-  loadScript(settings.value("default/script", "millimetered.js").toString());
+  QDir appdir(QApplication::applicationDirPath());
+  loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString());
 
   setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
 }
@@ -69,6 +70,11 @@ void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
 void QMMPaper::loadScript(QString filename) {
   // Open script file
   QFile file(filename);
+  if (!file.exists()) {
+    QMessageBox::critical(this, tr("Script not found"), tr("The script couldn't be found."));
+    on_menuLoadScript_triggered();
+  }
+
   file.open(QIODevice::ReadOnly | QIODevice::Text);
   
   // Evaluate it
@@ -78,6 +84,15 @@ void QMMPaper::loadScript(QString filename) {
   jsengine = new QScriptEngine();
   jsengine->evaluate(file.readAll());
   file.close();
+
+  // Detect if the script has disabled color buttons
+  if (!jsengine->globalObject().property("colorbuttons").toBoolean()) {
+    this->ui.color1GBox->setEnabled(false);
+    this->ui.color2GBox->setEnabled(false);
+  } else {
+    this->ui.color1GBox->setEnabled(true);
+    this->ui.color2GBox->setEnabled(true);
+  }
 
   // Inject wrapper object inside script engine
   if (jswrapper == NULL)
@@ -104,6 +119,9 @@ void QMMPaper::generate() {
 
   jsengine->globalObject().setProperty("paper", jsengine->newQObject(paper));
 
+  // Before drawing, tell graphicsview where we'll draw
+  ui.graphicsView->setSceneRect(0,0,width,height);
+
   // Tell script file to draw the paper
   QScriptValue result = jsengine->evaluate("draw();");
 
@@ -120,14 +138,10 @@ void QMMPaper::generate() {
     textitem->setZValue(5);
     scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(4);
   }
-
-  // Little hack to show the page like it will be printed
-  scene->addLine(0,0,1,0,QPen(Qt::white));
-  scene->addLine(0,height,1,height,QPen(Qt::white));
 }
 
 void QMMPaper::on_menuLoadScript_triggered() {
-  QString filename = QFileDialog::getOpenFileName(this, "Open script", "", "Scripts (*.js)");
+  QString filename = QFileDialog::getOpenFileName(this, tr("Open script"), "", "Scripts (*.js)");
 
   if (filename != NULL) {
     loadScript(filename);
@@ -154,15 +168,21 @@ void QMMPaper::on_menuPrintSettings_triggered() {
 }
 
 void QMMPaper::on_color1button_clicked() {
-  setColor(QColorDialog::getColor(color1), color2, color3);
+  QColor newcolor = QColorDialog::getColor(color1);
+  if (newcolor.isValid())
+    setColor(newcolor, color2, color3);
 }
 
 void QMMPaper::on_color2button_clicked() {
-  setColor(color1, QColorDialog::getColor(color2), color3);
+  QColor newcolor = QColorDialog::getColor(color2);
+  if (newcolor.isValid())
+    setColor(color1, newcolor, color3);
 }
 
 void QMMPaper::on_color3button_clicked() {
-  setColor(color1, color2, QColorDialog::getColor(color3));
+  QColor newcolor = QColorDialog::getColor(color3);
+  if (newcolor.isValid())
+    setColor(color1, color2, newcolor);
 }
 
 void QMMPaper::on_predefined1button_clicked() {

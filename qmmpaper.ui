@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>QMmPaper</string>
+   <string>QMMPaper</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QHBoxLayout" >
@@ -33,7 +33,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_3" >
+       <widget class="QGroupBox" name="textGBox" >
         <property name="title" >
          <string>Text</string>
         </property>
@@ -58,7 +58,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_2" >
+       <widget class="QGroupBox" name="color1GBox" >
         <property name="title" >
          <string>Predefined colors</string>
         </property>
@@ -66,21 +66,21 @@
          <item>
           <widget class="QPushButton" name="predefined1button" >
            <property name="text" >
-            <string>Black &amp;&amp; White</string>
+            <string>&amp;Black &amp;&amp; White</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="predefined2button" >
            <property name="text" >
-            <string>Orange</string>
+            <string>&amp;Orange</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="predefined3button" >
            <property name="text" >
-            <string>Blue</string>
+            <string>&amp;Blue</string>
            </property>
           </widget>
          </item>
@@ -88,7 +88,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox" >
+       <widget class="QGroupBox" name="color2GBox" >
         <property name="sizePolicy" >
          <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
           <horstretch>0</horstretch>
@@ -102,21 +102,21 @@
          <item>
           <widget class="QPushButton" name="color1button" >
            <property name="text" >
-            <string>&amp;Color 1</string>
+            <string>Color &amp;1</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="color2button" >
            <property name="text" >
-            <string>Color 2</string>
+            <string>Color &amp;2</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="color3button" >
            <property name="text" >
-            <string>Color 3</string>
+            <string>Color &amp;3</string>
            </property>
           </widget>
          </item>

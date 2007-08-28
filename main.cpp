@@ -18,6 +18,9 @@
  */
 
 #include <QApplication>
+#include <QLocale>
+#include <QTranslator>
+#include <QDir>
 
 #include "qmmpaper.h"
 
@@ -27,6 +30,15 @@ int main(int argc, char *argv[])
   QApplication::setOrganizationName("Alexis ROBERT");
   QApplication::setOrganizationDomain("qmmpaper.googlecode.com");
   QApplication::setApplicationName("QMMPaper");
+
+  // Init i18n
+  QString locale = QLocale::system().name();
+  QTranslator translator;
+
+  QDir appdir(QApplication::applicationDirPath());
+  appdir.cd("lang");
+  translator.load(appdir.filePath(QString("qmmpaper_")+locale));
+  app.installTranslator(&translator);
 
   QMMPaper form;
   form.show();

@@ -2,6 +2,9 @@ print("Millimetered paper script");
 print("Copyright (c) 2007 Alexis ROBERT");
 print("Bundled with QMMPaper v0.2, under GPL2");
 
+// This is a special value, which is detected by QMMPaper engine to enable color buttons
+var colorbuttons = true;
+
 var mm = 0;
 var width = 0;
 var height = 0;
