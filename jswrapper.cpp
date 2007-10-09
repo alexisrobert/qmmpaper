@@ -24,23 +24,10 @@ JSWrapper::JSWrapper(QGraphicsScene *scene) {
   this->scene = scene;
 }
 
-void JSWrapper::setColor(QColor color1, QColor color2, QColor color3) {
-  this->color1 = color1;
-  this->color2 = color2;
-  this->color3 = color3;
-}
-
-void JSWrapper::addLine(int x1, int y1, int x2, int y2, int color, int z) {
+void JSWrapper::addLine(int x1, int y1, int x2, int y2, QList<QVariant> color, int z) {
   QPen pen;
   pen.setWidth(0);
-
-  if (color == 1) {
-    pen.setColor(this->color1);
-  } else if (color == 2) {
-    pen.setColor(this->color2);
-  } else if (color == 3) {
-    pen.setColor(this->color3);
-  }
+  pen.setColor(QColor(color[0].toInt(),color[1].toInt(),color[2].toInt()));
 
   QGraphicsLineItem *line;
   line = scene->addLine(QLineF(x1,y1,x2,y2), pen);

@@ -61,8 +61,30 @@ void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
   this->color2 = color2;
   this->color3 = color3;
 
-  if (jswrapper != NULL)
-    jswrapper->setColor(color1, color2, color3);
+  if (jsengine != NULL) {
+    QScriptValue colors = jsengine->newArray();
+
+    QScriptValue colors1 = jsengine->newArray();
+    colors1.setProperty(0,jsengine->toScriptValue(color1.red()));
+    colors1.setProperty(1,jsengine->toScriptValue(color1.green()));
+    colors1.setProperty(2,jsengine->toScriptValue(color1.blue()));
+
+    QScriptValue colors2 = jsengine->newArray();
+    colors2.setProperty(0,jsengine->toScriptValue(color2.red()));
+    colors2.setProperty(1,jsengine->toScriptValue(color2.green()));
+    colors2.setProperty(2,jsengine->toScriptValue(color2.blue()));
+
+    QScriptValue colors3 = jsengine->newArray();
+    colors3.setProperty(0,jsengine->toScriptValue(color3.red()));
+    colors3.setProperty(1,jsengine->toScriptValue(color3.green()));
+    colors3.setProperty(2,jsengine->toScriptValue(color3.blue()));
+
+    colors.setProperty(0,colors1);
+    colors.setProperty(1,colors2);
+    colors.setProperty(2,colors3);
+
+    jsengine->globalObject().setProperty("current_color", colors);
+  }
 
   generate();
 }

@@ -22,22 +22,19 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QVariant>
 
 class JSWrapper : public QObject {
   Q_OBJECT
 
   public:
     JSWrapper(QGraphicsScene *scene);
-    void setColor(QColor color1, QColor color2, QColor color3);
 
   public slots:
-    void addLine(int x1, int y1, int x2, int y2, int color = 0, int z = 0);
+    void addLine(int x1, int y1, int x2, int y2, QList<QVariant> color, int z = 0);
 
   private:
     QGraphicsScene *scene;
-    QColor color1;
-    QColor color2;
-    QColor color3;
 };
 
 #endif
