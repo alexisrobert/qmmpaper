@@ -20,11 +20,12 @@
 #include <QtGui>
 
 #include "qmmpaper.h"
-#include "colors.h"
+#include "dynamicbutton.h"
 
 #include <QColorDialog>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QScriptValueIterator>
 
 QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 {
@@ -41,8 +42,6 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 
   QDir appdir(QApplication::applicationDirPath());
   loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString());
-
-  setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
 }
 
 QMMPaper::~QMMPaper() {
@@ -107,13 +106,35 @@ void QMMPaper::loadScript(QString filename) {
   jsengine->evaluate(file.readAll());
   file.close();
 
-  // Detect if the script has disabled color buttons
-  if (!jsengine->globalObject().property("colorbuttons").toBoolean()) {
-    this->ui.color1GBox->setEnabled(false);
-    this->ui.color2GBox->setEnabled(false);
-  } else {
-    this->ui.color1GBox->setEnabled(true);
-    this->ui.color2GBox->setEnabled(true);
+  // Delete all current color buttons
+  foreach(QObject *obj, ui.color1GBox->children()) {
+    if (obj->isWidgetType())
+      delete obj;
+  }
+
+  // Create color buttons
+  if (jsengine->globalObject().property("colors").isValid()) {
+    QScriptValue colorbuttons_list = jsengine->globalObject().property("colors");
+
+    QScriptValueIterator colorbuttons_it(colorbuttons_list);
+    while (colorbuttons_it.hasNext()) {
+      colorbuttons_it.next();
+
+      QList<QColor> *colors = new QList<QColor>;
+      
+      QScriptValueIterator colors_it(colorbuttons_it.value());
+      while (colors_it.hasNext()) {
+	colors_it.next();
+	colors->append(QColor((int)colors_it.value().property(0).toInteger(),
+			      (int)colors_it.value().property(1).toInteger(),
+			      (int)colors_it.value().property(2).toInteger()));
+      }
+      
+      DynamicButton *predefinedbutton = new DynamicButton(colorbuttons_it.name(), (QObject*)colors, ui.color1GBox);
+      ui.vboxLayout1->addWidget(predefinedbutton);
+      
+      QObject::connect(predefinedbutton, SIGNAL(clicked(QObject*)), this, SLOT(predefinedbutton_clicked(QObject*)));
+    }
   }
 
   // Inject wrapper object inside script engine
@@ -121,6 +142,13 @@ void QMMPaper::loadScript(QString filename) {
     jswrapper = new JSWrapper(scene);
 
   jsengine->globalObject().setProperty("wrapper", jsengine->newQObject(jswrapper));
+
+  // Choose the first color and generates
+  if (ui.color1GBox->children().count() < 2) {
+    generate();
+  } else {
+    ((DynamicButton *)ui.color1GBox->children()[1])->simulate();
+  }
 }
 
 void QMMPaper::generate() {
@@ -207,16 +235,9 @@ void QMMPaper::on_color3button_clicked() {
     setColor(color1, color2, newcolor);
 }
 
-void QMMPaper::on_predefined1button_clicked() {
-  setColor(BW_COLOR1, BW_COLOR2, BW_COLOR3);
-}
-
-void QMMPaper::on_predefined2button_clicked() {
-  setColor(ORANGE_COLOR1, ORANGE_COLOR2, ORANGE_COLOR3);
-}
-
-void QMMPaper::on_predefined3button_clicked() {
-  setColor(BLUE_COLOR1, BLUE_COLOR2, BLUE_COLOR3);
+void QMMPaper::predefinedbutton_clicked(QObject *data) {
+  QList<QColor> colorlist(*((QList<QColor>*)data));
+  setColor(colorlist[0], colorlist[1], colorlist[2]);
 }
 
 void QMMPaper::on_text_returnPressed() {

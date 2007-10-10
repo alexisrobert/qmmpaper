@@ -7,7 +7,7 @@ CONFIG += release
 QT += script
 
 # Input
-HEADERS += jswrapper.h paper.h qmmpaper.h
+HEADERS += jswrapper.h dynamicbutton.h paper.h qmmpaper.h
 FORMS += qmmpaper.ui
-SOURCES += main.cpp jswrapper.cpp qmmpaper.cpp paper.cpp
+SOURCES += main.cpp dynamicbutton.cpp jswrapper.cpp qmmpaper.cpp paper.cpp
 TRANSLATIONS += lang/qmmpaper_fr.ts

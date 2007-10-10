@@ -62,29 +62,7 @@
         <property name="title" >
          <string>Predefined colors</string>
         </property>
-        <layout class="QVBoxLayout" >
-         <item>
-          <widget class="QPushButton" name="predefined1button" >
-           <property name="text" >
-            <string>&amp;Black &amp;&amp; White</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="predefined2button" >
-           <property name="text" >
-            <string>&amp;Orange</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="predefined3button" >
-           <property name="text" >
-            <string>&amp;Blue</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" />
        </widget>
       </item>
       <item>
@@ -133,7 +111,7 @@
      <x>0</x>
      <y>0</y>
      <width>622</width>
-     <height>32</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File" >

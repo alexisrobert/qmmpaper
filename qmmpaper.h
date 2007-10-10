@@ -35,7 +35,7 @@ public:
   ~QMMPaper();
 
   void loadScript(QString filename);
-
+   
 private slots:
   void on_menuLoadScript_triggered();
   void on_menuExit_triggered();
@@ -44,9 +44,7 @@ private slots:
   void on_color1button_clicked();
   void on_color2button_clicked();
   void on_color3button_clicked();
-  void on_predefined1button_clicked();
-  void on_predefined2button_clicked();
-  void on_predefined3button_clicked();
+  void predefinedbutton_clicked(QObject *data);
   void on_text_returnPressed();
   void on_about_triggered();
 
