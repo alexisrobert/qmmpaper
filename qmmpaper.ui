@@ -76,29 +76,7 @@
         <property name="title" >
          <string>Custom colors</string>
         </property>
-        <layout class="QVBoxLayout" >
-         <item>
-          <widget class="QPushButton" name="color1button" >
-           <property name="text" >
-            <string>Color &amp;1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="color2button" >
-           <property name="text" >
-            <string>Color &amp;2</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="color3button" >
-           <property name="text" >
-            <string>Color &amp;3</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" />
        </widget>
       </item>
      </layout>

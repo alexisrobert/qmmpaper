@@ -55,19 +55,6 @@ QMMPaper::~QMMPaper() {
     delete jsengine;
 }
 
-void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
-  this->color1 = color1;
-  this->color2 = color2;
-  this->color3 = color3;
-
-  this->currentcolors.clear();
-  this->currentcolors << color1;
-  this->currentcolors << color2;
-  this->currentcolors << color3;
-  
-  generate();
-}
-
 void QMMPaper::loadScript(QString filename) {
   // Open script file
   QFile file(filename);
@@ -166,6 +153,22 @@ void QMMPaper::generate() {
   }
   jsengine->globalObject().setProperty("current_color", colors);
 
+  // The number of colors of the selected scheme are now in color_idx
+  // so, create the custom color buttons.
+  foreach(QObject *obj, ui.color2GBox->children()) {
+    if (obj->isWidgetType())
+      delete obj;
+  }
+
+  for (int i=0; i < colors_idx; i++) {
+    QString *id = new QString(QString::number(i));
+
+    DynamicButton *colorbutton = new DynamicButton(QString("&Color %1").arg(i+1), (QObject*)id, ui.color1GBox);
+    ui.vboxLayout2->addWidget(colorbutton);
+      
+    QObject::connect(colorbutton, SIGNAL(clicked(QObject*)), this, SLOT(colorbutton_clicked(QObject*)));
+  }
+
   // Before drawing, tell graphicsview where we'll draw
   ui.graphicsView->setSceneRect(0,0,width,height);
 
@@ -214,27 +217,24 @@ void QMMPaper::on_menuPrintSettings_triggered() {
   QMMPaper::generate();
 }
 
-void QMMPaper::on_color1button_clicked() {
-  QColor newcolor = QColorDialog::getColor(color1);
+void QMMPaper::colorbutton_clicked(QObject *data) {
+  int id = ((QString*)data)->toInt();
+  QColor newcolor = QColorDialog::getColor(currentcolors[id]);
+  
   if (newcolor.isValid())
-    setColor(newcolor, color2, color3);
-}
-
-void QMMPaper::on_color2button_clicked() {
-  QColor newcolor = QColorDialog::getColor(color2);
-  if (newcolor.isValid())
-    setColor(color1, newcolor, color3);
-}
-
-void QMMPaper::on_color3button_clicked() {
-  QColor newcolor = QColorDialog::getColor(color3);
-  if (newcolor.isValid())
-    setColor(color1, color2, newcolor);
+    currentcolors[id] = newcolor;
+  
+  generate();
 }
 
 void QMMPaper::predefinedbutton_clicked(QObject *data) {
   QList<QColor> colorlist(*((QList<QColor>*)data));
-  setColor(colorlist[0], colorlist[1], colorlist[2]);
+  
+  currentcolors.clear();
+  foreach(QColor color, colorlist)
+    currentcolors << color;
+
+  generate();
 }
 
 void QMMPaper::on_text_returnPressed() {
