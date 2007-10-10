@@ -48,7 +48,7 @@ private slots:
 
 private:
   void setColor(QColor color1, QColor color2, QColor color3);
-  void generate();
+  void generate(bool colorSchemeChanged = false);
 
   Ui::MainWindow ui;
   QGraphicsScene *scene;

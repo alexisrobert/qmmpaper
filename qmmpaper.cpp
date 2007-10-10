@@ -114,13 +114,13 @@ void QMMPaper::loadScript(QString filename) {
 
   // Choose the first color and generates
   if (ui.color1GBox->children().count() < 2) {
-    generate();
+    generate(true);
   } else {
     ((DynamicButton *)ui.color1GBox->children()[1])->simulate();
   }
 }
 
-void QMMPaper::generate() {
+void QMMPaper::generate(bool colorSchemeChanged) {
   // Empty the QGraphicsScene
   foreach(QGraphicsItem *item,scene->items()) {
     scene->removeItem(item);
@@ -153,20 +153,22 @@ void QMMPaper::generate() {
   }
   jsengine->globalObject().setProperty("current_color", colors);
 
-  // The number of colors of the selected scheme are now in color_idx
-  // so, create the custom color buttons.
-  foreach(QObject *obj, ui.color2GBox->children()) {
-    if (obj->isWidgetType())
-      delete obj;
-  }
-
-  for (int i=0; i < colors_idx; i++) {
-    QString *id = new QString(QString::number(i));
-
-    DynamicButton *colorbutton = new DynamicButton(QString("&Color %1").arg(i+1), (QObject*)id, ui.color1GBox);
-    ui.vboxLayout2->addWidget(colorbutton);
+  if (colorSchemeChanged == true) {
+    // The number of colors of the selected scheme are now in color_idx
+    // so, create the custom color buttons.
+    foreach(QObject *obj, ui.color2GBox->children()) {
+      if (obj->isWidgetType())
+	delete obj;
+    }
+    
+    for (int i=0; i < colors_idx; i++) {
+      QString *id = new QString(QString::number(i));
       
-    QObject::connect(colorbutton, SIGNAL(clicked(QObject*)), this, SLOT(colorbutton_clicked(QObject*)));
+      DynamicButton *colorbutton = new DynamicButton(QString("&Color %1").arg(i+1), (QObject*)id, ui.color1GBox);
+      ui.vboxLayout2->addWidget(colorbutton);
+      
+      QObject::connect(colorbutton, SIGNAL(clicked(QObject*)), this, SLOT(colorbutton_clicked(QObject*)));
+    }
   }
 
   // Before drawing, tell graphicsview where we'll draw
@@ -234,12 +236,12 @@ void QMMPaper::predefinedbutton_clicked(QObject *data) {
   foreach(QColor color, colorlist)
     currentcolors << color;
 
-  generate();
+  generate(true);
 }
 
 void QMMPaper::on_text_returnPressed() {
   text = ui.text->text();
-  QMMPaper::generate();
+  generate();
 }
 
 void QMMPaper::on_about_triggered() {
