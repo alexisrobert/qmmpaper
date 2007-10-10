@@ -58,6 +58,7 @@ private:
   QColor color1;
   QColor color2;
   QColor color3;
+  QList<QColor> currentcolors;
   QString text;
   Paper* paper;
 

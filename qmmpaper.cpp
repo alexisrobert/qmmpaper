@@ -60,31 +60,11 @@ void QMMPaper::setColor(QColor color1, QColor color2, QColor color3) {
   this->color2 = color2;
   this->color3 = color3;
 
-  if (jsengine != NULL) {
-    QScriptValue colors = jsengine->newArray();
-
-    QScriptValue colors1 = jsengine->newArray();
-    colors1.setProperty(0,jsengine->toScriptValue(color1.red()));
-    colors1.setProperty(1,jsengine->toScriptValue(color1.green()));
-    colors1.setProperty(2,jsengine->toScriptValue(color1.blue()));
-
-    QScriptValue colors2 = jsengine->newArray();
-    colors2.setProperty(0,jsengine->toScriptValue(color2.red()));
-    colors2.setProperty(1,jsengine->toScriptValue(color2.green()));
-    colors2.setProperty(2,jsengine->toScriptValue(color2.blue()));
-
-    QScriptValue colors3 = jsengine->newArray();
-    colors3.setProperty(0,jsengine->toScriptValue(color3.red()));
-    colors3.setProperty(1,jsengine->toScriptValue(color3.green()));
-    colors3.setProperty(2,jsengine->toScriptValue(color3.blue()));
-
-    colors.setProperty(0,colors1);
-    colors.setProperty(1,colors2);
-    colors.setProperty(2,colors3);
-
-    jsengine->globalObject().setProperty("current_color", colors);
-  }
-
+  this->currentcolors.clear();
+  this->currentcolors << color1;
+  this->currentcolors << color2;
+  this->currentcolors << color3;
+  
   generate();
 }
 
@@ -111,6 +91,8 @@ void QMMPaper::loadScript(QString filename) {
     if (obj->isWidgetType())
       delete obj;
   }
+
+  this->currentcolors.clear();
 
   // Create color buttons
   if (jsengine->globalObject().property("colors").isValid()) {
@@ -168,6 +150,21 @@ void QMMPaper::generate() {
   int height = paper->getHeight();
 
   jsengine->globalObject().setProperty("paper", jsengine->newQObject(paper));
+
+  // Now we fill the colors
+  QScriptValue colors = jsengine->newArray();
+  int colors_idx = 0;
+  foreach(QColor color, this->currentcolors) {
+    QScriptValue color_array = jsengine->newArray();
+
+    color_array.setProperty(0,jsengine->toScriptValue(color.red()));
+    color_array.setProperty(1,jsengine->toScriptValue(color.green()));
+    color_array.setProperty(2,jsengine->toScriptValue(color.blue()));
+
+    colors.setProperty(colors_idx,color_array);
+    colors_idx++;
+  }
+  jsengine->globalObject().setProperty("current_color", colors);
 
   // Before drawing, tell graphicsview where we'll draw
   ui.graphicsView->setSceneRect(0,0,width,height);
