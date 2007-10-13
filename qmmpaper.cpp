@@ -236,10 +236,10 @@ void QMMPaper::colorbutton_clicked(QObject *data) {
 }
 
 void QMMPaper::predefinedbutton_clicked(QObject *data) {
-  QList<QColor> colorlist(*((QList<QColor>*)data));
+  QList<QColor> *colorlist = (QList<QColor>*)data;
   
   currentcolors.clear();
-  foreach(QColor color, colorlist)
+  foreach(QColor color, *colorlist)
     currentcolors << color;
 
   generate();
