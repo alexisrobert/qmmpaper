@@ -237,12 +237,14 @@ void QMMPaper::colorbutton_clicked(QObject *data) {
 
 void QMMPaper::predefinedbutton_clicked(QObject *data) {
   QList<QColor> *colorlist = (QList<QColor>*)data;
-  
-  currentcolors.clear();
-  foreach(QColor color, *colorlist)
-    currentcolors << color;
 
-  generate();
+  if ((*colorlist) != currentcolors) { // Here is another simple cache :)
+    currentcolors.clear();
+    foreach(QColor color, *colorlist)
+      currentcolors << color;
+
+    generate();
+  }
 }
 
 void QMMPaper::on_text_returnPressed() {
