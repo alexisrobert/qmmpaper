@@ -38,6 +38,7 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   paper = NULL;
   jswrapper = NULL;
   jsengine = NULL;
+  misccolors_number = 0;
   text = "";
 
   QDir appdir(QApplication::applicationDirPath());
