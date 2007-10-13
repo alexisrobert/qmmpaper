@@ -117,13 +117,13 @@ void QMMPaper::loadScript(QString filename) {
 
   // Choose the first color and generates
   if (ui.color1GBox->children().count() < 2) {
-    generate(true);
+    generate();
   } else {
     ((DynamicButton *)ui.color1GBox->children()[1])->simulate();
   }
 }
 
-void QMMPaper::generate(bool colorSchemeChanged) {
+void QMMPaper::generate() {
   // Empty the QGraphicsScene
   foreach(QGraphicsItem *item,scene->items()) {
     scene->removeItem(item);
@@ -156,7 +156,8 @@ void QMMPaper::generate(bool colorSchemeChanged) {
   }
   jsengine->globalObject().setProperty("current_color", colors);
 
-  if (colorSchemeChanged == true) {
+  if (colors_idx != misccolors_number) { // Here is a very simple cache :)
+
     // The number of colors of the selected scheme are now in color_idx
     // so, create the custom color buttons.
     foreach(QObject *obj, ui.color2GBox->children()) {
@@ -172,6 +173,8 @@ void QMMPaper::generate(bool colorSchemeChanged) {
       
       QObject::connect(colorbutton, SIGNAL(clicked(QObject*)), this, SLOT(colorbutton_clicked(QObject*)));
     }
+
+    misccolors_number = colors_idx;
   }
 
   // Before drawing, tell graphicsview where we'll draw
@@ -239,7 +242,7 @@ void QMMPaper::predefinedbutton_clicked(QObject *data) {
   foreach(QColor color, colorlist)
     currentcolors << color;
 
-  generate(true);
+  generate();
 }
 
 void QMMPaper::on_text_returnPressed() {
