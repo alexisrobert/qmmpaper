@@ -33,7 +33,7 @@ QObject* DynamicButton::data() {
 }
 
 void DynamicButton::data(QObject* data) {
-  this->_data = &(*data);
+  this->_data = data;
 }
 
 void DynamicButton::on_clicked() {

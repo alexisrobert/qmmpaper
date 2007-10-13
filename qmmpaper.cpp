@@ -53,6 +53,9 @@ QMMPaper::~QMMPaper() {
 
   if (jsengine != NULL)
     delete jsengine;
+
+  delete printer;
+  delete scene;
 }
 
 void QMMPaper::loadScript(QString filename) {
