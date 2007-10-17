@@ -178,7 +178,7 @@ void QMMPaper::generate() {
     for (int i=0; i < colors_idx; i++) {
       QString *id = new QString(QString::number(i));
       
-      DynamicButton *colorbutton = new DynamicButton(QString("&Color %1").arg(i+1), (QObject*)id, ui.color1GBox);
+      DynamicButton *colorbutton = new DynamicButton(QString(tr("&Color %1")).arg(i+1), (QObject*)id, ui.color1GBox);
       ui.vboxLayout2->addWidget(colorbutton);
       
       QObject::connect(colorbutton, SIGNAL(clicked(QObject*)), this, SLOT(colorbutton_clicked(QObject*)));

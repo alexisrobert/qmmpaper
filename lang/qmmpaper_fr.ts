@@ -19,92 +19,67 @@
         <translation>Couleurs prédéfinies</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="99"/>
+        <location filename="../qmmpaper.ui" line="77"/>
         <source>Custom colors</source>
         <translation>Couleurs perso</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="141"/>
+        <location filename="../qmmpaper.ui" line="97"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="151"/>
+        <location filename="../qmmpaper.ui" line="107"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="161"/>
+        <location filename="../qmmpaper.ui" line="117"/>
         <source>&amp;Exit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="166"/>
+        <location filename="../qmmpaper.ui" line="122"/>
         <source>&amp;Print</source>
         <translation>&amp;Imprimer</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="171"/>
+        <location filename="../qmmpaper.ui" line="127"/>
         <source>&amp;Print settings...</source>
         <translation>&amp;Mise en page...</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="176"/>
+        <location filename="../qmmpaper.ui" line="132"/>
         <source>&amp;About ...</source>
         <translation>&amp;A propos ...</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.ui" line="181"/>
+        <location filename="../qmmpaper.ui" line="137"/>
         <source>Load script ...</source>
         <translation>Charger un script ...</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="69"/>
-        <source>&amp;Black &amp;&amp; White</source>
-        <translation type="unfinished">&amp;Noir &amp;&amp; Blanc</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="76"/>
-        <source>&amp;Orange</source>
-        <translation type="unfinished">&amp;Orange</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="83"/>
-        <source>&amp;Blue</source>
-        <translation type="unfinished">&amp;Bleu</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="105"/>
-        <source>Color &amp;1</source>
-        <translation type="unfinished">Couleur &amp;1</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="112"/>
-        <source>Color &amp;2</source>
-        <translation type="unfinished">Couleur &amp;2</translation>
-    </message>
-    <message>
-        <location filename="../qmmpaper.ui" line="119"/>
-        <source>Color &amp;3</source>
-        <translation type="unfinished">Couleur &amp;3</translation>
     </message>
 </context>
 <context>
     <name>QMMPaper</name>
     <message>
-        <location filename="../qmmpaper.cpp" line="74"/>
+        <location filename="../qmmpaper.cpp" line="66"/>
         <source>Script not found</source>
         <translation>Script non trouvé</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.cpp" line="74"/>
+        <location filename="../qmmpaper.cpp" line="66"/>
         <source>The script couldn&apos;t be found.</source>
         <translation>Le fichier de script n&apos;a pas pu être trouvé.</translation>
     </message>
     <message>
-        <location filename="../qmmpaper.cpp" line="144"/>
+        <location filename="../qmmpaper.cpp" line="212"/>
         <source>Open script</source>
         <translation>Ouvrir un script</translation>
+    </message>
+    <message>
+        <location filename="../qmmpaper.cpp" line="181"/>
+        <source>&amp;Color %1</source>
+        <translation>&amp;Couleur %1</translation>
     </message>
 </context>
 </TS>
