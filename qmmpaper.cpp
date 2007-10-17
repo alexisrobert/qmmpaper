@@ -122,6 +122,15 @@ void QMMPaper::loadScript(QString filename) {
   } else {
     ((DynamicButton *)ui.color1GBox->children()[1])->simulate();
   }
+
+  // If there is no colors (like for the music script), hide color boxes
+  if (ui.color1GBox->children().count() == 1) {
+    ui.color1GBox->hide();
+    ui.color2GBox->hide();
+  } else {
+    ui.color1GBox->show();
+    ui.color2GBox->show();
+  }
 }
 
 void QMMPaper::generate() {
