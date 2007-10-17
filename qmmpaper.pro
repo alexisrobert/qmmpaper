@@ -4,6 +4,8 @@ TARGET =
 CONFIG += qt x86
 CONFIG += release
 
+ICON = icon/osx/qmmpaper.icns
+
 QT += script
 
 # Input
