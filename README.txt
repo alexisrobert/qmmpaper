@@ -6,4 +6,4 @@ To build it, you must have Qt4 :
 	$ make
 	$ ./qmmpaper
 
-It has been tested on Ubuntu Feisty, MacOSX10.4 and Windows (with MinGW).
+It has been tested on Ubuntu Gutsy, MacOSX10.4 and Windows (with MinGW).
