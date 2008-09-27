@@ -28,9 +28,9 @@ function drawLine(lineno, horizontal) {
 		z = 2;
 
 	if (horizontal == true)
-		wrapper.addLine(lineno*mm,0,lineno*mm,round_height,current_color[color],z);
+		wrapper.addLine(lineno*mm,0,lineno*mm,height,current_color[color],z);
 	else
-		wrapper.addLine(0,lineno*mm,round_width,lineno*mm,current_color[color],z);
+		wrapper.addLine(0,lineno*mm,width,lineno*mm,current_color[color],z);
 }
 
 function draw() {
@@ -38,8 +38,8 @@ function draw() {
 	width = paper.getWidth();
 	height = paper.getHeight();
 
-	round_width = width - (width%mm);
-	round_height = height - (height%mm);
+	round_width = width;
+	round_height = height;
 
 	for (i = 0; i*mm < width; i++)
 		drawLine(i, true);
