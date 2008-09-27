@@ -1,6 +1,18 @@
 -- QMMPaper changelog --
 
-Copyright (c) 2007 Alexis ROBERT
+Copyright (c) 2007-2008 Alexis ROBERT
+
+0.2.5
+	* Fix the bad-precision printing bug :
+	  the lines were not making real millimeters, due to a
+	  printer DPI issue. Now printing in high resolution
+	  by default (1200dpi).
+	* Add menu shortcuts
+	* Now renders the text in a dpi-independent way
+	* Now add real-time scene resizing
+	* Some QPrinter tweaks
+	* If a printer was not configured, now shows the
+	  print setting dialog.
 
 0.2
 	* Port drawing functions and color presets into QtScript.
