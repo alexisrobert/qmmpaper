@@ -30,6 +30,9 @@
 QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 {
   ui.setupUi(this);
+
+  this->setWindowIcon(QIcon(":/icon/app.png"));
+
   printer = new QPrinter(QPrinter::HighResolution);
   printer->setCreator("QMMPaper");
   
