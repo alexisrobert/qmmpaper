@@ -31,6 +31,7 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 {
   ui.setupUi(this);
   printer = new QPrinter(QPrinter::HighResolution);
+  printer->setCreator("QMMPaper");
   
   scene = new QGraphicsScene(this);
   ui.graphicsView->setScene(scene);
@@ -224,9 +225,15 @@ void QMMPaper::on_menuExit_triggered() {
 }
 
 void QMMPaper::on_menuPrint_triggered() {
-  QPainter painter(printer);
-  scene->render(&painter, QRectF(0,0,printer->width(),printer->height()));
-  painter.end();
+  if (!printer->isValid()) {
+    this->on_menuPrintSettings_triggered();
+  }
+
+  if (printer->isValid()) {
+    QPainter painter(printer);
+    scene->render(&painter, QRectF(0,0,printer->width(),printer->height()));
+    painter.end();
+  }
 }
 
 void QMMPaper::on_menuPrintSettings_triggered() {
