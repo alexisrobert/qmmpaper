@@ -10,14 +10,14 @@ function draw() {
 	height = paper.getHeight();
 
 	between_margin = 2;
-	score_margin = 50;
+	score_margin = 10;
 
-	y = score_margin;
+	y = score_margin*mm;
 	while (y+(5*between_margin*mm)+score_margin < height) {
 		for (i = 0; i < 5; i++) {
 			wrapper.addLine(0,y,width,y,color);
 			y = y+(between_margin*mm);
 		}
-		y = y+score_margin;
+		y = y+(score_margin*mm);
 	}
 }

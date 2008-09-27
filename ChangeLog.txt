@@ -13,6 +13,8 @@ Copyright (c) 2007-2008 Alexis ROBERT
 	* Some QPrinter tweaks
 	* If a printer was not configured, now shows the
 	  print setting dialog.
+	* No more centimeter rounding in millimetered.js
+	* Fix some DPI-independent bugs.
 
 0.2
 	* Port drawing functions and color presets into QtScript.
