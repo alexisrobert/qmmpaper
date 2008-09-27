@@ -283,7 +283,7 @@ void QMMPaper::on_text_returnPressed() {
 }
 
 void QMMPaper::on_about_triggered() {
-  QMessageBox::about(this, "QMMPaper", "Copyright (c) 2007 Alexis ROBERT");
+  QMessageBox::about(this, "QMMPaper", "Copyright (c) 2007-2008 Alexis ROBERT");
 }
 
 void QMMPaper::refit_viewport() {
