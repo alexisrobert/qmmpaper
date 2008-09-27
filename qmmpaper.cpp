@@ -205,11 +205,16 @@ void QMMPaper::generate() {
 
   // Add text
   if (!text.isEmpty()) {
-    QGraphicsTextItem *textitem = scene->addText(text);
+    QFont *font = new QFont();
+    font->setPixelSize(3*mm); // font will be 3mm high
+    
+    QGraphicsTextItem *textitem = scene->addText(text, *font);
     textitem->setPos((width/2)-(textitem->boundingRect().width()/2), 
 		     (height-(5*mm))-(textitem->boundingRect().height()/2)); // Centers the text
     textitem->setZValue(5);
     scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(4);
+
+    delete font;
   }
 
   // And now resize the view
