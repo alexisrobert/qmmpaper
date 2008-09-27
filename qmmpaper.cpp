@@ -30,7 +30,7 @@
 QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 {
   ui.setupUi(this);
-  printer = new QPrinter();
+  printer = new QPrinter(QPrinter::HighResolution);
   
   scene = new QGraphicsScene(this);
   ui.graphicsView->setScene(scene);
@@ -232,6 +232,7 @@ void QMMPaper::on_menuPrint_triggered() {
 void QMMPaper::on_menuPrintSettings_triggered() {
   QPrintDialog printdialog(printer, NULL);
   printdialog.exec();
+
   QMMPaper::generate();
 }
 
