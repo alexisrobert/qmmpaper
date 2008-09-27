@@ -45,10 +45,12 @@ private slots:
   void predefinedbutton_clicked(QObject *data);
   void on_text_returnPressed();
   void on_about_triggered();
+  void refit_viewport();
 
 private:
   void setColor(QColor color1, QColor color2, QColor color3);
   void generate();
+  void resizeEvent(QResizeEvent *event);
 
   Ui::MainWindow ui;
   QGraphicsScene *scene;

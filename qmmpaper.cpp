@@ -44,6 +44,10 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
 
   QDir appdir(QApplication::applicationDirPath());
   loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString());
+
+  this->update();
+  this->repaint();
+  QTimer::singleShot(10, this, SLOT(refit_viewport()));
 }
 
 QMMPaper::~QMMPaper() {
@@ -207,6 +211,9 @@ void QMMPaper::generate() {
     textitem->setZValue(5);
     scene->addRect(textitem->sceneBoundingRect(), QPen(Qt::white), QBrush(Qt::white))->setZValue(4);
   }
+
+  // And now resize the view
+  this->refit_viewport();
 }
 
 void QMMPaper::on_menuLoadScript_triggered() {
@@ -272,4 +279,14 @@ void QMMPaper::on_text_returnPressed() {
 
 void QMMPaper::on_about_triggered() {
   QMessageBox::about(this, "QMMPaper", "Copyright (c) 2007 Alexis ROBERT");
+}
+
+void QMMPaper::refit_viewport() {
+  ui.graphicsView->fitInView(0, 0, paper->getWidth(), paper->getHeight(), Qt::KeepAspectRatio);
+}
+
+void QMMPaper::resizeEvent(QResizeEvent *evt) {
+  QMainWindow::resizeEvent(evt);
+  
+  this->refit_viewport();
 }
