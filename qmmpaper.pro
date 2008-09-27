@@ -6,7 +6,7 @@ CONFIG += release
 
 ICON = icon/osx/qmmpaper.icns
 RESOURCES += qmmpaper.qrc
-win32:RCC_FILE +=   qmmpaper-win32.rc
+RC_FILE += qmmpaper-win32.rc
 
 QT += script
 
