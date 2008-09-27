@@ -15,6 +15,7 @@ Copyright (c) 2007-2008 Alexis ROBERT
 	  print setting dialog.
 	* No more centimeter rounding in millimetered.js
 	* Fix some DPI-independent bugs.
+	* Add the qmmpaper icon on all platforms.
 
 0.2
 	* Port drawing functions and color presets into QtScript.
