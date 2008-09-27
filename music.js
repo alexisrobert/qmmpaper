@@ -1,6 +1,6 @@
 print("Music paper script");
 print("Copyright (c) 2007 Alexis ROBERT");
-print("Bundled with QMMPaper v0.2, under GPL2");
+print("Bundled with QMMPaper v0.2.5, under GPL2");
 
 var color = [0,0,0]; // Music paper lines are "all blacks" !
 

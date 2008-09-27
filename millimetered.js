@@ -1,6 +1,6 @@
 print("Millimetered paper script");
 print("Copyright (c) 2007 Alexis ROBERT");
-print("Bundled with QMMPaper v0.2, under GPL2");
+print("Bundled with QMMPaper v0.2.5, under GPL2");
 
 var colors = {'Black && &White': [[127,127,127],[208,208,208],[173,173,173]],
 		'&Orange': [[255,144,0],[255,207,77],[255,184,29]],
