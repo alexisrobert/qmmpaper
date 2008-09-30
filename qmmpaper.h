@@ -26,6 +26,10 @@
 #include <QSettings>
 #include "jswrapper.h"
 
+#ifndef DEFAULT_SCRIPT_PATH
+#define DEFAULT_SCRIPT_PATH QApplication::applicationDirPath()
+#endif
+
 class QMMPaper : public QMainWindow
 {
   Q_OBJECT

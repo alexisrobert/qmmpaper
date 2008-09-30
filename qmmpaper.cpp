@@ -45,7 +45,7 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   misccolors_number = 0;
   text = "";
 
-  QDir appdir(QApplication::applicationDirPath());
+  QDir appdir(DEFAULT_SCRIPT_PATH);
   loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString());
 
   this->update();
@@ -225,7 +225,7 @@ void QMMPaper::generate() {
 }
 
 void QMMPaper::on_menuLoadScript_triggered() {
-  QString filename = QFileDialog::getOpenFileName(this, tr("Open script"), "", "Scripts (*.js)");
+  QString filename = QFileDialog::getOpenFileName(this, tr("Open script"), DEFAULT_SCRIPT_PATH, "Scripts (*.js)");
 
   if (filename != NULL) {
     loadScript(filename);
