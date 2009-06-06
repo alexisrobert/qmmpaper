@@ -46,7 +46,8 @@ QMMPaper::QMMPaper(QMainWindow *parent) : QMainWindow(parent)
   text = "";
 
   QDir appdir(DEFAULT_SCRIPT_PATH);
-  loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString());
+  if (loadScript(settings.value("default/script", appdir.filePath("millimetered.js")).toString()) == 1)
+	  exit(1);
 
   this->update();
   this->repaint();
@@ -67,12 +68,15 @@ QMMPaper::~QMMPaper() {
   delete scene;
 }
 
-void QMMPaper::loadScript(QString filename) {
+int QMMPaper::loadScript(QString filename) {
   // Open script file
   QFile file(filename);
   if (!file.exists()) {
     QMessageBox::critical(this, tr("Script not found"), tr("The script couldn't be found."));
-    on_menuLoadScript_triggered();
+    if (loadscriptDialog() == 1)
+      return 1;
+    else
+      return 0;
   }
 
   file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -139,6 +143,8 @@ void QMMPaper::loadScript(QString filename) {
     ui.color1GBox->show();
     ui.color2GBox->show();
   }
+
+  return 0;
 }
 
 void QMMPaper::generate() {
@@ -224,7 +230,7 @@ void QMMPaper::generate() {
   this->refit_viewport();
 }
 
-void QMMPaper::on_menuLoadScript_triggered() {
+int QMMPaper::loadscriptDialog() {
   QString filename = QFileDialog::getOpenFileName(this, tr("Open script"), DEFAULT_SCRIPT_PATH, "Scripts (*.js)");
 
   if (filename != NULL) {
@@ -232,7 +238,14 @@ void QMMPaper::on_menuLoadScript_triggered() {
     generate();
 
     settings.setValue("default/script", filename);
+    return 0;
+  } else {
+    return 1;
   }
+}
+
+void QMMPaper::on_menuLoadScript_triggered() {
+  loadscriptDialog();
 }
 
 void QMMPaper::on_menuExit_triggered() {

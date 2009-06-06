@@ -38,7 +38,8 @@ public:
   QMMPaper(QMainWindow *parent = 0);
   ~QMMPaper();
 
-  void loadScript(QString filename);
+  int loadScript(QString filename);
+  int loadscriptDialog();
    
 private slots:
   void on_menuLoadScript_triggered();
